@@ -1,0 +1,3 @@
+Arbeitszeit 4.0 – PWA
+
+Alle Dateien gemeinsam in ein Verzeichnis eines HTTPS-Webhosts hochladen. Die index.html in Safari öffnen, Teilen > Zum Home-Bildschirm > Hinzufügen. Nach dem ersten vollständigen Online-Aufruf ist die Offline-Nutzung vorgesehen. Kein automatischer Abgleich zwischen Geräten. Daten per JSON-Sicherung übertragen. Jahresurlaub und Kontobeginn in Einstellungen festlegen. Sollzeitänderungen gelten rückwirkend.
