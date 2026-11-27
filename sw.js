@@ -1,7 +1,7 @@
-const CACHE='arbeitszeit-v6-2-5-entry';
-const BUILD='6.2.5-entry';
+const CACHE='arbeitszeit-v6-2-6-icon';
+const BUILD='6.2.6-icon';
 const INDEX=new URL('./index.html',self.registration.scope).href;
-const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const ASSETS=['./manifest.webmanifest','./icon-192.png?v=626','./icon-512.png?v=626'];
 async function isBuild(response){return response.ok&&(await response.clone().text()).includes('name="app-build" content="'+BUILD+'"');}
 self.addEventListener('install',event=>event.waitUntil((async()=>{
   const cache=await caches.open(CACHE);
