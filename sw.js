@@ -1,5 +1,5 @@
-const CACHE='arbeitszeit-v6-0-8-half-vacation';
-const BUILD='6.0.8-half-vacation';
+const CACHE='arbeitszeit-v6-0-9-gestures';
+const BUILD='6.0.9-gestures';
 const INDEX=new URL('./index.html',self.registration.scope).href;
 const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 async function isBuild(response){return response.ok&&(await response.clone().text()).includes('name="app-build" content="'+BUILD+'"');}
