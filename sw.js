@@ -1,5 +1,5 @@
-const CACHE='arbeitszeit-v6-0-5-floating-menu-refined';
-const BUILD='6.0.5-floating-menu-refined';
+const CACHE='arbeitszeit-v6-0-6-menu-spacing';
+const BUILD='6.0.6-menu-spacing';
 const INDEX=new URL('./index.html',self.registration.scope).href;
 const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 async function isBuild(response){return response.ok&&(await response.clone().text()).includes('name="app-build" content="'+BUILD+'"');}
