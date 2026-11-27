@@ -1,1 +1,29 @@
-const CACHE='arbeitszeit-v6-0-erfassen-1';const ASSETS=['./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('arbeitszeit-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(fetch(e.request).catch(()=>caches.match(e.request).then(r=>r||(e.request.mode==='navigate'?caches.match('./index.html'):Response.error()))))});
+const CACHE='arbeitszeit-v6-0-1-erfassen-update1';
+const BUILD='6.0.1-erfassen-update1';
+const INDEX=new URL('./index.html',self.registration.scope).href;
+const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+async function isBuild(response){return response.ok&&(await response.clone().text()).includes('name="app-build" content="'+BUILD+'"');}
+self.addEventListener('install',event=>event.waitUntil((async()=>{
+  const cache=await caches.open(CACHE);
+  const index=await fetch(INDEX,{cache:'reload'});
+  if(!await isBuild(index))throw new Error('App build not available yet');
+  await cache.put(INDEX,index);
+  await cache.addAll(ASSETS.map(url=>new Request(new URL(url,self.registration.scope),{cache:'reload'})));
+  await self.skipWaiting();
+})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{
+  await Promise.all((await caches.keys()).filter(k=>k.startsWith('arbeitszeit-')&&k!==CACHE).map(k=>caches.delete(k)));
+  await self.clients.claim();
+})()));
+self.addEventListener('fetch',event=>{
+  const request=event.request;
+  if(request.method!=='GET'||!request.url.startsWith(self.registration.scope))return;
+  event.respondWith((async()=>{
+    const cache=await caches.open(CACHE);
+    if(request.mode==='navigate'){
+      try{const response=await fetch(request,{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);if(await isBuild(response))await cache.put(INDEX,response.clone()).catch(()=>{});return response;}
+      catch(error){return await cache.match(INDEX)||Response.error();}
+    }
+    try{return await fetch(request);}catch(error){return await cache.match(request)||Response.error();}
+  })());
+});
