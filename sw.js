@@ -1,5 +1,5 @@
-const CACHE='arbeitszeit-v6-2-4-quarter';
-const BUILD='6.2.4-quarter';
+const CACHE='arbeitszeit-v6-2-5-entry';
+const BUILD='6.2.5-entry';
 const INDEX=new URL('./index.html',self.registration.scope).href;
 const ASSETS=['./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 async function isBuild(response){return response.ok&&(await response.clone().text()).includes('name="app-build" content="'+BUILD+'"');}
